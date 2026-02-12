@@ -1,0 +1,28 @@
+! ==========================
+! SW-HR - VLAN 30 Access SW
+! ==========================
+
+enable
+configure terminal
+
+hostname SW-HR
+no ip domain-lookup
+
+vlan 30
+ name HR
+exit
+
+interface range fastEthernet0/1-3
+ switchport mode access
+ switchport access vlan 30
+ spanning-tree portfast
+exit
+
+interface fastEthernet0/4
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30
+ no shutdown
+exit
+
+end
+write memory
