@@ -1,0 +1,39 @@
+! =======================================
+! MLS1 - VLAN database + trunk uplinks
+! (Layer-2 trunking in this lab)
+! =======================================
+
+enable
+configure terminal
+
+hostname MLS1
+no ip domain-lookup
+
+! --- VLANs ---
+vlan 10
+ name IT
+vlan 20
+ name SALES
+vlan 30
+ name HR
+exit
+
+! --- Trunk ports (adjust to match your topology) ---
+! Example:
+! Gi1/0/1 -> SW-IT uplink
+! Gi1/0/2 -> SW-SALES uplink
+! Gi1/0/3 -> SW-HR uplink
+! Gi1/0/4 -> Router R1 (Gi0/0)
+
+interface range gigabitEthernet1/0/1-4
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30
+ no shutdown
+exit
+
+end
+write memory
+
+! --- Verification ---
+! show vlan brief
+! show interfaces trunk
